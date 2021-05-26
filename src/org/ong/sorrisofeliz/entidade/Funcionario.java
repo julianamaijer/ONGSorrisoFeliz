@@ -3,8 +3,7 @@ package org.ong.sorrisofeliz.entidade;
 public class Funcionario extends Pessoa {
 
     private Long numeroFuncional;
-    private String tipo;
-    private String funcao;
+    private String funcao = "";
 
 
     public Long getNumeroFuncional() {
@@ -13,14 +12,6 @@ public class Funcionario extends Pessoa {
 
     public void setNumeroFuncional(Long numeroFuncional) {
         this.numeroFuncional = numeroFuncional;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getFuncao() {

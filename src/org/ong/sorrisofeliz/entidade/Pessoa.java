@@ -5,10 +5,10 @@ import java.time.LocalDate;
 public class Pessoa {
 
     private Long id;
-    private String nome;
-    private String cpf;
-    private String rg;
-    private String telefone;
+    private String nome = "";
+    private String cpf = "";
+    private String rg = "";
+    private String telefone = "";
 
     public String getRg() {
         return rg;

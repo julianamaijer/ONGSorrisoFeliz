@@ -3,7 +3,7 @@ package org.ong.sorrisofeliz.entidade;
 public class Visitante extends Pessoa {
 
     private Long numero;
-    private boolean paciente;
+    private boolean paciente = false;
 
     public Long getNumero() {
         return numero;
