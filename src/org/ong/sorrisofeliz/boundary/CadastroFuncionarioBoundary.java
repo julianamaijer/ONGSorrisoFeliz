@@ -3,6 +3,7 @@ package org.ong.sorrisofeliz.boundary;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -39,33 +40,37 @@ public class CadastroFuncionarioBoundary extends Application implements EventHan
     public void start(Stage stage) throws Exception {
         GridPane gp = new GridPane();
         Scene scene = new Scene(gp, 600, 400);
+        gp.setAlignment(Pos.BASELINE_CENTER);
 
-        gp.add(new Label("Id:"), 0, 0);
-        gp.add(txtId,0,1);
-        gp.add(new Label("Nome:"), 0, 2);
-        gp.add(txtNome,0,3);
-        gp.add(new Label("CPF:"), 0, 4);
-        gp.add(txtCpf,0,5);
-        gp.add(new Label("RG:"), 0, 6);
-        gp.add(txtRg,0,7);
-        gp.add(new Label("Telefone:"), 0, 8);
-        gp.add(txtTelefone,0,9);
-        gp.add(new Label("Data de Nascimento:"), 0, 10);
-        gp.add(txtDataNascimento,0,11);
-        gp.add(new Label("Funcional:"), 0, 12);
-        gp.add(txtNumeroFuncional, 0,13);
-        gp.add(new Label("Função:"), 0, 14);
-        gp.add(txtFuncao,0,15);
-        gp.add(btnAdicionar,0,16);
-        gp.add(btnPesquisar,1,16);
-        gp.add(btnRemover,2,16);
-        gp.add(btnAlterar,3,16);
+        gp.add(new Label("Id:"), 0, 5);
+        gp.add(txtId,3,5);
+        gp.add(new Label("Nome:"), 0, 7);
+        gp.add(txtNome,3, 7);
+        gp.add(new Label("CPF:"), 0, 9);
+        gp.add(txtCpf,3,9);
+        gp.add(new Label("RG:"), 0, 11);
+        gp.add(txtRg,3,11);
+        gp.add(new Label("Telefone:"), 0, 13);
+        gp.add(txtTelefone,3,13);
+        gp.add(new Label("Data de Nascimento:"), 0, 15);
+        gp.add(txtDataNascimento,3,15);
+        gp.add(new Label("Funcional:"), 0, 17);
+        gp.add(txtNumeroFuncional, 3,17);
+        gp.add(new Label("Função:"), 0, 19);
+        gp.add(txtFuncao,3,19);
+        gp.add(btnAdicionar,0,21);
+        gp.add(btnPesquisar,1,21);
+        gp.add(btnRemover,2,21);
+        gp.add(btnAlterar,3,21);
+
+        btnAdicionar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
+        btnPesquisar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
+        btnRemover.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
+        btnAlterar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
 
         btnAdicionar.setOnAction(this);
         btnPesquisar.setOnAction(this);
-/*        btnRemover.setOnAction(this);
-        btnAlterar.setOnAction(this);*/
-
+        btnRemover.setOnAction(this);
 
         stage.setScene(scene);
         stage.setTitle("Cadastro Funcionário");
@@ -113,6 +118,8 @@ public class CadastroFuncionarioBoundary extends Application implements EventHan
         }else if(event.getSource() == btnPesquisar){
             Funcionario funcionario = control.pesquisarPorNome(txtNome.getText());
             this.entityToBoundary(funcionario);
+        }else if(event.getSource() == btnRemover){
+            control.removerPeloNome(txtNome.getText());
         }
     }
 

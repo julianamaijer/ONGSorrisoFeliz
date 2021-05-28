@@ -4,11 +4,12 @@ import java.time.LocalDate;
 
 public class Pessoa {
 
-    private Long id;
+    private Long id = 0L;
     private String nome = "";
     private String cpf = "";
     private String rg = "";
     private String telefone = "";
+    private LocalDate dataNascimento;
 
     public String getRg() {
         return rg;
@@ -17,8 +18,6 @@ public class Pessoa {
     public void setRg(String rg) {
         this.rg = rg;
     }
-
-    private LocalDate dataNascimento;
 
     public Long getId() {
         return id;

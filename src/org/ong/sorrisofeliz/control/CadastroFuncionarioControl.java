@@ -22,6 +22,9 @@ public class CadastroFuncionarioControl {
         return null;
     }
 
-
+    public void removerPeloNome(String nome){
+        Funcionario funcionario = pesquisarPorNome(nome);
+        funcionarios.remove(funcionario);
+    }
 
 }

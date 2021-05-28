@@ -2,7 +2,7 @@ package org.ong.sorrisofeliz.entidade;
 
 public class Funcionario extends Pessoa {
 
-    private Long numeroFuncional;
+    private Long numeroFuncional = 0L;
     private String funcao = "";
 
 
