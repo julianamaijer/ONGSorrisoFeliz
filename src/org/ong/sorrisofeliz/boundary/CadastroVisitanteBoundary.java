@@ -1,6 +1,7 @@
 package org.ong.sorrisofeliz.boundary;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,6 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.BooleanStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
+import javafx.util.converter.LongStringConverter;
 import org.ong.sorrisofeliz.control.CadastroVisitanteControl;
 import org.ong.sorrisofeliz.entidade.Funcionario;
 import org.ong.sorrisofeliz.entidade.Visitante;
@@ -59,7 +65,7 @@ public class CadastroVisitanteBoundary extends Application {
         gp.add(txtDataNascimento,3,15);
         gp.add(new Label("Funcional:"), 0, 17);
         gp.add(txtNumero, 3,17);
-        gp.add(new Label("Função:"), 0, 19);
+        gp.add(new Label("É paciente?"), 0, 19);
         gp.add(txtPaciente,3,19);
         gp.add(btnAdicionar,0,21);
         gp.add(btnPesquisar,1,21);
@@ -78,6 +84,19 @@ public class CadastroVisitanteBoundary extends Application {
         btnAdicionar.setOnAction((e) -> {cadastroFuncionarioControl.adicionar();});
         btnPesquisar.setOnAction((e) -> {cadastroFuncionarioControl.pesquisarPorNome();});
         //btnRemover.setOnAction(this);
+
+        StringConverter longToStringConverter = new LongStringConverter();
+        StringConverter localDateToStringConverter = new LocalDateStringConverter();
+        StringConverter booleanToStringConverter = new BooleanStringConverter();
+
+        Bindings.bindBidirectional(txtId.textProperty(), cadastroFuncionarioControl.idProperty(), longToStringConverter);
+        Bindings.bindBidirectional(txtNome.textProperty(), cadastroFuncionarioControl.nomeProperty());
+        Bindings.bindBidirectional(txtCpf.textProperty(), cadastroFuncionarioControl.cpfProperty());
+        Bindings.bindBidirectional(txtRg.textProperty(), cadastroFuncionarioControl.rgProperty());
+        Bindings.bindBidirectional(txtTelefone.textProperty(), cadastroFuncionarioControl.telefoneProperty());
+        Bindings.bindBidirectional(txtDataNascimento.textProperty(), cadastroFuncionarioControl.dataNascimentoProperty(), localDateToStringConverter);
+        Bindings.bindBidirectional(txtNumero.textProperty(), cadastroFuncionarioControl.numeroProperty(), longToStringConverter);
+        Bindings.bindBidirectional(txtPaciente.textProperty(), cadastroFuncionarioControl.pacienteProperty(), booleanToStringConverter);
 
         stage.setScene(scene);
         stage.setTitle("Cadastro Visitante");

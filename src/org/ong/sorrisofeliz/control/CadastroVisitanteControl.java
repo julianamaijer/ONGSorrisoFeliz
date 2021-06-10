@@ -158,14 +158,16 @@ public class CadastroVisitanteControl {
         columnDataNascimento.setCellValueFactory(new PropertyValueFactory<Visitante, LocalDate>("telefone"));
         TableColumn<Visitante, Long> columnNumero = new TableColumn<>("Número");
         columnNumero.setCellValueFactory(new PropertyValueFactory<Visitante, Long>("numero"));
-        TableColumn<Visitante, Boolean> columnPaciente = new TableColumn<>("Paciente");
+        TableColumn<Visitante, Boolean> columnPaciente = new TableColumn<>("É paciente?");
         columnPaciente.setCellValueFactory(new PropertyValueFactory<Visitante, Boolean>("nome"));
 
         table.getColumns().addAll(columnId,columnNome,columnCpf,columnRg,columnTelefone,columnDataNascimento,columnNumero,columnPaciente);
 
-        table.selectionModelProperty().addListener((obs, antigo, novo) -> {
-
+        table.getSelectionModel().selectedItemProperty().addListener((obs, antigo, novo) -> {
+                setEntity(novo);
         });
+
+        table.setItems(visitantes);
 
     }
 

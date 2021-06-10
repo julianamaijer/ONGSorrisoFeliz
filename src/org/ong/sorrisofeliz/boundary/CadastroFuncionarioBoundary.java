@@ -1,6 +1,7 @@
 package org.ong.sorrisofeliz.boundary;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,15 +9,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.BooleanStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
+import javafx.util.converter.LongStringConverter;
 import org.ong.sorrisofeliz.control.CadastroFuncionarioControl;
 import org.ong.sorrisofeliz.entidade.Funcionario;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class CadastroFuncionarioBoundary extends Application implements EventHandler<ActionEvent> {
+public class CadastroFuncionarioBoundary extends Application {
 
     private TextField txtId = new TextField();
     private TextField txtNome = new TextField();
@@ -39,7 +45,8 @@ public class CadastroFuncionarioBoundary extends Application implements EventHan
     @Override
     public void start(Stage stage) throws Exception {
         GridPane gp = new GridPane();
-        Scene scene = new Scene(gp, 600, 400);
+        BorderPane borderPane = new BorderPane();
+        Scene scene = new Scene(borderPane, 600, 400);
         gp.setAlignment(Pos.BASELINE_CENTER);
 
         gp.add(new Label("Id:"), 0, 5);
@@ -63,64 +70,35 @@ public class CadastroFuncionarioBoundary extends Application implements EventHan
         gp.add(btnRemover,2,21);
         gp.add(btnAlterar,3,21);
 
+        control.generatedTable();
+        borderPane.setTop(gp);
+        borderPane.setCenter(control.getTable());
+
         btnAdicionar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
         btnPesquisar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
         btnRemover.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
         btnAlterar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
 
-        btnAdicionar.setOnAction(this);
-        btnPesquisar.setOnAction(this);
-        btnRemover.setOnAction(this);
+        btnAdicionar.setOnAction((e) -> {control.adicionar();});
+        btnPesquisar.setOnAction((e) -> {control.pesquisarPorNome();});
+        //btnRemover.setOnAction(this);
+
+        StringConverter longToStringConverter = new LongStringConverter();
+        StringConverter localDateToStringConverter = new LocalDateStringConverter();
+
+        Bindings.bindBidirectional(txtId.textProperty(), control.idProperty(), longToStringConverter);
+        Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
+        Bindings.bindBidirectional(txtCpf.textProperty(), control.cpfProperty());
+        Bindings.bindBidirectional(txtRg.textProperty(), control.rgProperty());
+        Bindings.bindBidirectional(txtTelefone.textProperty(), control.telefoneProperty());
+        Bindings.bindBidirectional(txtDataNascimento.textProperty(), control.dataNascimentoProperty(), localDateToStringConverter);
+        Bindings.bindBidirectional(txtNumeroFuncional.textProperty(), control.numeroFuncionalProperty(), longToStringConverter);
+        Bindings.bindBidirectional(txtFuncao.textProperty(), control.funcaoProperty());
 
         stage.setScene(scene);
         stage.setTitle("Cadastro Funcionário");
         stage.show();
 
-    }
-
-    public Funcionario boundaryToEntity(){
-        Funcionario funcionario = new Funcionario();
-
-        funcionario.setNome(txtNome.getText());
-        funcionario.setCpf(txtCpf.getText());
-        funcionario.setRg(txtRg.getText());
-        funcionario.setTelefone(txtTelefone.getText());
-        funcionario.setFuncao(txtFuncao.getText());
-        try{
-            funcionario.setId(Long.parseLong(txtId.getText()));
-            funcionario.setDataNascimento(LocalDate.parse(txtDataNascimento.getText(), dtf));
-            funcionario.setNumeroFuncional(Long.parseLong(txtNumeroFuncional.getText()));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return funcionario;
-    }
-
-    public void entityToBoundary(Funcionario funcionario){
-        if (funcionario != null){
-            txtId.setText(String.valueOf(funcionario.getId()));
-            txtNome.setText(funcionario.getNome());
-            txtCpf.setText(funcionario.getCpf());
-            txtRg.setText(funcionario.getRg());
-            txtTelefone.setText(funcionario.getTelefone());
-            txtDataNascimento.setText(String.valueOf(funcionario.getDataNascimento().format(dtf)));
-            txtNumeroFuncional.setText(String.valueOf(funcionario.getNumeroFuncional()));
-            txtFuncao.setText(funcionario.getFuncao());
-        }
-
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-        if(event.getSource() == btnAdicionar){
-            Funcionario funcionario = boundaryToEntity();
-            control.adicionar(funcionario);
-        }else if(event.getSource() == btnPesquisar){
-            Funcionario funcionario = control.pesquisarPorNome(txtNome.getText());
-            this.entityToBoundary(funcionario);
-        }else if(event.getSource() == btnRemover){
-            control.removerPeloNome(txtNome.getText());
-        }
     }
 
     public static void main(String[] args) {

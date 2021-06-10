@@ -3,7 +3,9 @@ package org.ong.sorrisofeliz.control;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.ong.sorrisofeliz.entidade.Funcionario;
 import org.ong.sorrisofeliz.entidade.Visitante;
 
@@ -18,7 +20,7 @@ public class CadastroFuncionarioControl {
     private static final String PASSWORD = "123456";
 
     private ObservableList<Funcionario> funcionarios = FXCollections.observableArrayList();
-    private TableView<Visitante> table = new TableView<>();
+    private TableView<Funcionario> table = new TableView<>();
 
     private LongProperty id = new SimpleLongProperty(0);
     private StringProperty nome = new SimpleStringProperty("");
@@ -55,22 +57,122 @@ public class CadastroFuncionarioControl {
         return funcionario;
     }
 
-    public void adicionar(Funcionario funcionario){
+    public void adicionar(){
+        Funcionario funcionario = getEntity();
         funcionarios.add(funcionario);
     }
 
-    public Funcionario pesquisarPorNome(String nome){
+    public void pesquisarPorNome(){
         for (Funcionario funcionario : funcionarios){
-            if(funcionario.getNome().contains(nome)){
-                return funcionario;
+            if(funcionario.getNome().contains(nome.get())){
+                this.setEntity(funcionario);
             }
         }
-        return null;
     }
 
-    public void removerPeloNome(String nome){
+    public ObservableList<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public TableView<Funcionario> getTable() {
+        return table;
+    }
+
+    public long getId() {
+        return id.get();
+    }
+
+    public LongProperty idProperty() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome.get();
+    }
+
+    public StringProperty nomeProperty() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf.get();
+    }
+
+    public StringProperty cpfProperty() {
+        return cpf;
+    }
+
+    public String getRg() {
+        return rg.get();
+    }
+
+    public StringProperty rgProperty() {
+        return rg;
+    }
+
+    public String getTelefone() {
+        return telefone.get();
+    }
+
+    public StringProperty telefoneProperty() {
+        return telefone;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento.get();
+    }
+
+    public ObjectProperty<LocalDate> dataNascimentoProperty() {
+        return dataNascimento;
+    }
+
+    public long getNumeroFuncional() {
+        return numeroFuncional.get();
+    }
+
+    public LongProperty numeroFuncionalProperty() {
+        return numeroFuncional;
+    }
+
+    public String getFuncao() {
+        return funcao.get();
+    }
+
+    public StringProperty funcaoProperty() {
+        return funcao;
+    }
+
+    public void generatedTable(){
+        TableColumn<Funcionario, Long> columnId = new TableColumn<>("Id");
+        columnId.setCellValueFactory(new PropertyValueFactory<Funcionario, Long>("id"));
+        TableColumn<Funcionario, String> columnNome = new TableColumn<>("Nome");
+        columnNome.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("nome"));
+        TableColumn<Funcionario, String> columnCpf = new TableColumn<>("CPF");
+        columnCpf.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("cpf"));
+        TableColumn<Funcionario, String> columnRg = new TableColumn<>("RG");
+        columnRg.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("rg"));
+        TableColumn<Funcionario, String> columnTelefone = new TableColumn<>("Telefone");
+        columnTelefone.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("telefone"));
+        TableColumn<Funcionario, LocalDate> columnDataNascimento = new TableColumn<>("Data de Nascimento");
+        columnDataNascimento.setCellValueFactory(new PropertyValueFactory<Funcionario, LocalDate>("telefone"));
+        TableColumn<Funcionario, Long> columnNumeroFuncional = new TableColumn<>("Número Funcional");
+        columnNumeroFuncional.setCellValueFactory(new PropertyValueFactory<Funcionario, Long>("numeroFuncional"));
+        TableColumn<Funcionario, String> columnFuncao = new TableColumn<>("Função");
+        columnFuncao.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("funcao"));
+
+        table.getColumns().addAll(columnId,columnNome,columnCpf,columnRg,columnTelefone,columnDataNascimento,columnNumeroFuncional,columnFuncao);
+
+        table.getSelectionModel().selectedItemProperty().addListener((obs, antigo, novo) -> {
+            setEntity(novo);
+        });
+
+        table.setItems(funcionarios);
+
+    }
+
+/*    public void removerPeloNome(String nome){
         Funcionario funcionario = pesquisarPorNome(nome);
         funcionarios.remove(funcionario);
-    }
+    }*/
 
 }
