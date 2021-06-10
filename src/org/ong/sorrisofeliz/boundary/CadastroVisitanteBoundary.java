@@ -63,7 +63,7 @@ public class CadastroVisitanteBoundary extends Application {
         gp.add(txtTelefone,3,13);
         gp.add(new Label("Data de Nascimento:"), 0, 15);
         gp.add(txtDataNascimento,3,15);
-        gp.add(new Label("Funcional:"), 0, 17);
+        gp.add(new Label("Número:"), 0, 17);
         gp.add(txtNumero, 3,17);
         gp.add(new Label("É paciente?"), 0, 19);
         gp.add(txtPaciente,3,19);

@@ -22,6 +22,7 @@ public class CadastroServicoBoundary extends Application {
 
     private TextField txtNome = new TextField();
     private TextField txtDescricao = new TextField();
+    private TextField txtId = new TextField();
 
     private Button btnAdicionar = new Button("Adicionar");
     private Button btnPesquisar = new Button("Pesquisar");
@@ -39,14 +40,16 @@ public class CadastroServicoBoundary extends Application {
         Scene scene = new Scene(borderPane, 400, 400);
         gp.setAlignment(Pos.BASELINE_CENTER);
 
-        gp.add(new Label("Nome:"), 0, 5);
-        gp.add(txtNome,3,5);
-        gp.add(new Label("Descrição:"), 0, 7);
-        gp.add(txtDescricao,3, 7);
-        gp.add(btnAdicionar,0,9);
-        gp.add(btnPesquisar,1,9);
-        gp.add(btnRemover,2,9);
-        gp.add(btnAlterar,3,9);
+        gp.add(new Label("Id:"), 0, 5);
+        gp.add(txtId,3,5);
+        gp.add(new Label("Nome:"), 0, 7);
+        gp.add(txtNome,3, 7);
+        gp.add(new Label("Descrição:"), 0, 9);
+        gp.add(txtDescricao,3, 9);
+        gp.add(btnAdicionar,0,11);
+        gp.add(btnPesquisar,1,11);
+        gp.add(btnRemover,2,11);
+        gp.add(btnAlterar,3,11);
 
         control.generatedTable();
         borderPane.setTop(gp);
@@ -58,15 +61,17 @@ public class CadastroServicoBoundary extends Application {
         btnAlterar.setStyle("-fx-border-color:  #00cec9; -fx-background-color:  white; -fx-color:  #00cec9");
 
         btnAdicionar.setOnAction((e) -> {control.adicionar();});
-        btnPesquisar.setOnAction((e) -> {control.pesquisarPorNome();});
+        btnPesquisar.setOnAction((e) -> {control.pesquisarPorServico();});
         //btnRemover.setOnAction(this);
 
+        StringConverter longToStringConverter = new LongStringConverter();
 
+        Bindings.bindBidirectional(txtId.textProperty(), control.idProperty(), longToStringConverter);
         Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
         Bindings.bindBidirectional(txtDescricao.textProperty(), control.descricaoProperty());
 
         stage.setScene(scene);
-        stage.setTitle("Cadastro Servico");
+        stage.setTitle("Cadastro Serviço");
         stage.show();
 
     }

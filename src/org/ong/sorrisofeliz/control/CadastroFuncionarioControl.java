@@ -17,7 +17,7 @@ public class CadastroFuncionarioControl {
 
     private static final String URL = "jdbc:mariadb://localhost:3306/ongdb?allowMultiQueries=true";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "maijer1245";
 
     private ObservableList<Funcionario> funcionarios = FXCollections.observableArrayList();
     private TableView<Funcionario> table = new TableView<>();

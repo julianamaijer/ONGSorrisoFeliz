@@ -2,8 +2,17 @@ package org.ong.sorrisofeliz.entidade;
 
 public class Servico {
 
+    private Long id;
     private String nome;
     private String descricao;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
